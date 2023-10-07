@@ -1,0 +1,108 @@
+---
+title: "Big Red Data competition"
+author: "Khoa Ho, Keesha Joseph"
+date: "2023-03-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r}
+Etna <- read.csv ("Etna Township Data.csv")
+
+View(Etna)
+
+acres_own <- Etna %>%
+  filter()
+```
+
+```{r}
+township_section <- Etna %>%
+  select(In.what.section.of.the.township.do.you.live.)
+
+ggplot(Etna) + 
+  aes(x = In.what.section.of.the.township.do.you.live., ) +
+  geom_bar(color = "black", fill = "brown") +
+labs(
+  x = "Etna Township Sections",
+  y = "Number of Residents",
+  title= "Etna Township Section Distribution"
+) +
+  theme_bw()+
+  stat_count()
+```
+
+```{r}
+township_section <- Etna %>%
+  select(What.is.your.relationship.to.the.Township.)
+
+ggplot(na.omit(Etna)) + 
+  aes(x = What.is.your.relationship.to.the.Township.) +
+  geom_bar(color = "black", fill = "gray") +
+  labs(x = "Township Living Status",
+  y = "Number of Residents",
+  title= "Relationship to Etna Township"
+) +
+  scale_x_discrete(labels = c(""))+
+  theme_bw()+
+  stat_count()
+```
+
+```{r}
+reason_for_township <- Etna %>%
+  select("What.are.the.top.two.reasons.you.live.in.the.Township.","X.27", "X.28", "X.29", "X.30", "X.31", "X.32", "X.33") 
+reason_for_township
+
+pivot_longer(reason_for_township, c("What.are.the.top.two.reasons.you.live.in.the.Township.","X.27", "X.28", "X.29", "X.30", "X.31", "X.32", "X.33"), values_to= "reasons_for_living") -> reason_living
+
+View(reason_living)
+
+ggplot(table(reason_living$name, reason_living$reasons_for_living))  
+
+table(reason_living$name, reason_living$reasons_for_living)
+
+reason_for_township
+View(reason_for_township)
+
+ggplot(reason_for_township, aes(x= What.are.the.top.two.reasons.you.live.in.the.Township.)) +
+  geom_bar() +
+  labs(x = "", y = "", title= ""
+) +  
+   scale_x_discrete(labels = c("Quiet for Retirement", "Access to Employment", "Cleanliness", "Friendliness", "Rural Atmosphere", "School System")) +
+  theme_bw() +
+  stat_count()
+```
+
+
+```{r}
+ggplot(Etna) + 
+  aes(x = In.what.section.of.the.township.do.you.live., ) +
+  geom_bar(color = "black", fill = "brown") +
+labs(
+  x = "Etna Township Sections",
+  y = "Number of Residents",
+  title= "Etna Township Section Distribution"
+) +
+  theme_bw()+
+  stat_count()
+```
+
+```{r}
+ggplot(Etna) + 
+  aes(x = Would.You.Consider.Yourself. ) +
+  geom_bar(color = "black", fill = "brown") +
+labs(
+  x = "Opinion",
+  y = "Number of Residents",
+  title= "Etna Township Growth Mindset"
+) +
+  theme_grey() 
+```
+
+
